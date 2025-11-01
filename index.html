@@ -118,9 +118,10 @@
         /* HERO SECTION */
         .hero-section {
             height: 100vh;
-            background: linear-gradient(rgba(5, 9, 13, 0.7), rgba(139, 15, 15, 0.3)), url('primeiro bloco/hero-bg.mp4');
+            background: linear-gradient(rgba(5, 9, 13, 0.7), rgba(139, 15, 15, 0.3)), url('primeiro bloco/background.png');
             background-size: cover;
             background-position: center;
+            background-repeat: no-repeat;
             display: flex;
             align-items: center;
             color: white;
@@ -152,6 +153,18 @@
             position: relative;
             z-index: 2;
             max-width: 800px;
+        }
+
+        .hero-image {
+            position: absolute;
+            right: 5%;
+            top: 50%;
+            transform: translateY(-50%);
+            max-height: 90vh;
+            max-width: 500px;
+            object-fit: contain;
+            z-index: 2;
+            opacity: 0.9;
         }
 
         .hero-title {
@@ -682,6 +695,14 @@
             }
         }
 
+        @media (max-width: 992px) and (min-width: 769px) {
+            .hero-image {
+                max-width: 400px;
+                max-height: 70vh;
+                right: 3%;
+            }
+        }
+
         /* ANIMAÇÕES */
         .fade-in {
             opacity: 0;
@@ -717,15 +738,14 @@
 
     <!-- HERO SECTION -->
     <section class="hero-section">
-        <video class="hero-video" autoplay muted loop>
-            <source src="primeiro bloco/hero-video.mp4" type="video/mp4">
-            <source src="videos/institucional.mp4" type="video/mp4">
-        </video>
         <div class="hero-overlay"></div>
         
+        <!-- Imagem da Juíza -->
+        <img src="primeiro bloco/imagem juiza.png" alt="Juíza AMCC" class="hero-image d-none d-md-block">
+        
         <div class="container">
-            <div class="row">
-                <div class="col-lg-8">
+            <div class="row align-items-center">
+                <div class="col-lg-7 col-md-8">
                     <div class="hero-content">
                         <h1 class="hero-title fade-in">
                             Seu fluxo de caixa travou? 💸
@@ -739,6 +759,11 @@
                             🎯 Quero recuperar meu dinheiro agora
                         </a>
                     </div>
+                </div>
+                
+                <!-- Imagem da Juíza para Mobile -->
+                <div class="col-12 d-md-none text-center mt-4">
+                    <img src="primeiro bloco/imagem juiza.png" alt="Juíza AMCC" class="hero-image-mobile fade-in" style="max-height: 300px; max-width: 250px; opacity: 0.9;">
                 </div>
             </div>
         </div>
@@ -1584,6 +1609,15 @@
                 video.preload = 'metadata';
                 video.setAttribute('playsinline', '');
                 video.setAttribute('webkit-playsinline', '');
+                
+                // Garantir que inicia com som
+                video.muted = false;
+                video.volume = 0.8; // Volume inicial em 80%
+                
+                // Configurar ícone inicial do mute
+                if (videoObj.muteBtn) {
+                    videoObj.muteBtn.innerHTML = '<i class="fas fa-volume-up"></i>';
+                }
             }
 
             startPlay(videoNum) {
@@ -1607,6 +1641,9 @@
                 
                 console.log(`Attempting to play video ${videoNum}`);
                 
+                // Garantir que o vídeo não está mutado
+                video.muted = false;
+                
                 // Garantir que o vídeo está carregado
                 video.load();
                 
@@ -1618,15 +1655,28 @@
                         console.log(`Video ${videoNum} started playing successfully`);
                         // Adicionar classe para indicar que está tocando
                         video.classList.add('playing');
+                        
+                        // Atualizar ícone do botão de mute
+                        if (videoObj.muteBtn) {
+                            videoObj.muteBtn.innerHTML = '<i class="fas fa-volume-up"></i>';
+                        }
                     }).catch((error) => {
                         console.log(`Trying muted playback for video ${videoNum}`, error);
-                        // Tentar com áudio mutado se der erro
+                        // Apenas em caso de erro, tentar com áudio mutado
                         video.muted = true;
                         const retryPromise = video.play();
                         if (retryPromise !== undefined) {
                             retryPromise.then(() => {
-                                console.log(`Video ${videoNum} playing muted`);
+                                console.log(`Video ${videoNum} playing muted due to autoplay policy`);
                                 video.classList.add('playing');
+                                
+                                // Atualizar ícone do botão de mute
+                                if (videoObj.muteBtn) {
+                                    videoObj.muteBtn.innerHTML = '<i class="fas fa-volume-mute"></i>';
+                                }
+                                
+                                // Mostrar dica para usuário ativar som
+                                this.showUnmuteHint(videoNum);
                             }).catch((retryError) => {
                                 console.error(`Failed to play video ${videoNum}:`, retryError);
                             });
@@ -1681,6 +1731,59 @@
                     const icon = video.muted ? 'fa-volume-mute' : 'fa-volume-up';
                     videoObj.muteBtn.innerHTML = `<i class="fas ${icon}"></i>`;
                 }
+                
+                console.log(`Video ${videoNum} ${video.muted ? 'muted' : 'unmuted'}`);
+            }
+
+            showUnmuteHint(videoNum) {
+                const videoObj = this.videos[videoNum];
+                
+                // Criar elemento de dica se não existir
+                let hint = videoObj.container.querySelector('.unmute-hint');
+                if (!hint) {
+                    hint = document.createElement('div');
+                    hint.className = 'unmute-hint';
+                    hint.innerHTML = '<i class="fas fa-volume-up"></i> Clique para ativar som';
+                    hint.style.cssText = `
+                        position: absolute;
+                        top: 10px;
+                        right: 10px;
+                        background: rgba(0,0,0,0.8);
+                        color: white;
+                        padding: 8px 12px;
+                        border-radius: 6px;
+                        font-size: 12px;
+                        z-index: 10;
+                        cursor: pointer;
+                        transition: opacity 0.3s ease;
+                    `;
+                    
+                    // Clique na dica ativa o som
+                    hint.addEventListener('click', () => {
+                        if (videoObj.element.muted) {
+                            this.toggleMute(videoNum);
+                        }
+                        hint.style.opacity = '0';
+                        setTimeout(() => hint.remove(), 300);
+                    });
+                    
+                    videoObj.container.appendChild(hint);
+                }
+                
+                // Mostrar dica
+                hint.style.opacity = '1';
+                
+                // Remover automaticamente após 5 segundos
+                setTimeout(() => {
+                    if (hint && hint.parentNode) {
+                        hint.style.opacity = '0';
+                        setTimeout(() => {
+                            if (hint && hint.parentNode) {
+                                hint.remove();
+                            }
+                        }, 300);
+                    }
+                }, 5000);
             }
 
             formatTime(seconds) {
