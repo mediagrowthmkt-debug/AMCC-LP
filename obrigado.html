@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Obrigado! - AMCC | Sua Análise Foi Solicitada</title>
+    <meta name="description" content="Obrigado por solicitar sua análise gratuita. Nossa equipe entrará em contato em breve para recuperar seu dinheiro.">
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary-color: #8B0F0F;
+            --primary-dark: #7C0C0C;
+            --secondary-color: #FFFFFF;
+            --tertiary-color: #C4C4C4;
+            --dark-modern: #05090D;
+            --light-bg: #F9F3F3;
+            --subtle-bg: #F7EDEE;
+            --success-color: #28a745;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            color: var(--dark-modern);
+            background: linear-gradient(135deg, var(--light-bg) 0%, var(--subtle-bg) 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .thank-you-section {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            padding: 100px 0;
+        }
+
+        .thank-you-container {
+            background: white;
+            border-radius: 30px;
+            padding: 80px 60px;
+            box-shadow: 0 30px 60px rgba(0,0,0,0.1);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .thank-you-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(90deg, var(--primary-color), var(--success-color));
+        }
+
+        .success-icon {
+            width: 120px;
+            height: 120px;
+            background: linear-gradient(135deg, var(--success-color), #20c997);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 40px;
+            font-size: 4rem;
+            color: white;
+            animation: checkmark 0.8s ease-in-out;
+        }
+
+        @keyframes checkmark {
+            0% {
+                transform: scale(0);
+                opacity: 0;
+            }
+            50% {
+                transform: scale(1.2);
+            }
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        .thank-you-title {
+            font-size: 3rem;
+            font-weight: 800;
+            color: var(--dark-modern);
+            margin-bottom: 30px;
+            animation: slideInUp 0.8s ease-out 0.2s both;
+        }
+
+        .thank-you-subtitle {
+            font-size: 1.4rem;
+            color: var(--success-color);
+            font-weight: 600;
+            margin-bottom: 40px;
+            animation: slideInUp 0.8s ease-out 0.4s both;
+        }
+
+        .thank-you-message {
+            font-size: 1.2rem;
+            color: #666;
+            margin-bottom: 50px;
+            line-height: 1.8;
+            animation: slideInUp 0.8s ease-out 0.6s both;
+        }
+
+        .next-steps {
+            background: var(--light-bg);
+            border-radius: 20px;
+            padding: 40px;
+            margin: 50px 0;
+            animation: slideInUp 0.8s ease-out 0.8s both;
+        }
+
+        .next-steps h3 {
+            color: var(--primary-color);
+            font-weight: 700;
+            margin-bottom: 30px;
+        }
+
+        .step-item {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 25px;
+            text-align: left;
+        }
+
+        .step-number {
+            width: 40px;
+            height: 40px;
+            background: var(--primary-color);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            margin-right: 20px;
+            flex-shrink: 0;
+        }
+
+        .step-content h4 {
+            color: var(--dark-modern);
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .step-content p {
+            color: #666;
+            margin: 0;
+        }
+
+        .contact-info {
+            background: var(--primary-color);
+            color: white;
+            border-radius: 20px;
+            padding: 40px;
+            margin: 50px 0;
+            animation: slideInUp 0.8s ease-out 1s both;
+        }
+
+        .contact-info h3 {
+            margin-bottom: 30px;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        .contact-item i {
+            font-size: 1.5rem;
+            margin-right: 15px;
+        }
+
+        .contact-item a {
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .contact-item a:hover {
+            color: #f8f9fa;
+            text-decoration: underline;
+        }
+
+        .social-links {
+            margin-top: 30px;
+        }
+
+        .social-links a {
+            display: inline-block;
+            width: 50px;
+            height: 50px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 50%;
+            color: white;
+            text-decoration: none;
+            font-size: 1.5rem;
+            line-height: 50px;
+            margin: 0 10px;
+            transition: all 0.3s ease;
+        }
+
+        .social-links a:hover {
+            background: white;
+            color: var(--primary-color);
+            transform: translateY(-3px);
+        }
+
+        .back-btn {
+            background: var(--dark-modern);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            border-radius: 50px;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.3s ease;
+            margin-top: 30px;
+            animation: slideInUp 0.8s ease-out 1.2s both;
+        }
+
+        .back-btn:hover {
+            background: var(--primary-color);
+            color: white;
+            transform: translateY(-3px);
+            text-decoration: none;
+        }
+
+        @keyframes slideInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* RESPONSIVO */
+        @media (max-width: 768px) {
+            .thank-you-container {
+                padding: 50px 30px;
+                margin: 20px;
+            }
+            
+            .thank-you-title {
+                font-size: 2.2rem;
+            }
+            
+            .thank-you-subtitle {
+                font-size: 1.2rem;
+            }
+            
+            .thank-you-message {
+                font-size: 1.1rem;
+            }
+            
+            .next-steps, .contact-info {
+                padding: 30px 20px;
+            }
+        }
+
+        /* Confetes animados */
+        .confetti {
+            position: fixed;
+            top: -10px;
+            z-index: 1000;
+            animation: fall 3s linear infinite;
+        }
+
+        @keyframes fall {
+            to {
+                transform: translateY(100vh) rotate(360deg);
+            }
+        }
+    </style>
+</head>
+<body>
+    <section class="thank-you-section">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-10 col-xl-8">
+                    <div class="thank-you-container">
+                        <div class="success-icon">
+                            <i class="fas fa-check"></i>
+                        </div>
+                        
+                        <h1 class="thank-you-title">
+                            🎉 Obrigado!
+                        </h1>
+                        
+                        <p class="thank-you-subtitle">
+                            Sua solicitação de análise gratuita foi recebida com sucesso!
+                        </p>
+                        
+                        <p class="thank-you-message">
+                            Parabéns por dar o primeiro passo para recuperar seu dinheiro! 
+                            Nossa equipe de especialistas já recebeu suas informações e está 
+                            preparando uma análise personalizada da sua carteira de inadimplentes.
+                        </p>
+
+                        <div class="next-steps">
+                            <h3><i class="fas fa-clipboard-list"></i> Próximos Passos</h3>
+                            
+                            <div class="step-item">
+                                <div class="step-number">1</div>
+                                <div class="step-content">
+                                    <h4>Análise Detalhada</h4>
+                                    <p>Nossa equipe fará uma análise completa do seu perfil e carteira de inadimplentes nas próximas 24 horas.</p>
+                                </div>
+                            </div>
+                            
+                            <div class="step-item">
+                                <div class="step-number">2</div>
+                                <div class="step-content">
+                                    <h4>Contato Especializado</h4>
+                                    <p>Um consultor especializado entrará em contato via WhatsApp ou telefone para apresentar sua proposta personalizada.</p>
+                                </div>
+                            </div>
+                            
+                            <div class="step-item">
+                                <div class="step-number">3</div>
+                                <div class="step-content">
+                                    <h4>Estratégia Customizada</h4>
+                                    <p>Apresentaremos uma estratégia sob medida para recuperar seus valores sem custo antecipado.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="contact-info">
+                            <h3><i class="fas fa-headset"></i> Precisa falar conosco?</h3>
+                            
+                            <div class="contact-item">
+                                <i class="fas fa-phone"></i>
+                                <a href="tel:08009412686">0800 941 2686</a>
+                            </div>
+                            
+                            <div class="contact-item">
+                                <i class="fab fa-whatsapp"></i>
+                                <a href="https://wa.me/5511999999999" target="_blank">WhatsApp: (11) 99999-9999</a>
+                            </div>
+                            
+                            <div class="contact-item">
+                                <i class="fas fa-envelope"></i>
+                                <a href="mailto:contato@amcc.com.br">contato@amcc.com.br</a>
+                            </div>
+                            
+                            <div class="social-links">
+                                <a href="#" target="_blank"><i class="fab fa-facebook-f"></i></a>
+                                <a href="#" target="_blank"><i class="fab fa-instagram"></i></a>
+                                <a href="#" target="_blank"><i class="fab fa-linkedin-in"></i></a>
+                            </div>
+                        </div>
+
+                        <a href="index.html" class="back-btn">
+                            <i class="fas fa-arrow-left"></i> Voltar à Página Inicial
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer style="background: var(--dark-modern); color: white; padding: 30px 0; text-align: center;">
+        <div class="container">
+            <p style="margin: 0; color: rgba(255,255,255,0.7);">
+                © 2024 AMCC - Todos os direitos reservados. | 
+                Transformando inadimplência em oportunidade há mais de 30 anos.
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        // Efeito de confetes
+        function createConfetti() {
+            const confetti = document.createElement('div');
+            confetti.className = 'confetti';
+            confetti.style.left = Math.random() * 100 + 'vw';
+            confetti.style.animationDuration = (Math.random() * 2 + 1) + 's';
+            confetti.style.fontSize = (Math.random() * 20 + 10) + 'px';
+            confetti.innerHTML = ['🎉', '🎊', '✨', '🎈', '🏆'][Math.floor(Math.random() * 5)];
+            
+            document.body.appendChild(confetti);
+            
+            setTimeout(() => {
+                confetti.remove();
+            }, 3000);
+        }
+
+        // Criar confetes por 5 segundos
+        const confettiInterval = setInterval(createConfetti, 300);
+        setTimeout(() => {
+            clearInterval(confettiInterval);
+        }, 5000);
+
+        // Analytics/Tracking (opcional)
+        // Aqui você pode adicionar código de tracking como Google Analytics, Facebook Pixel, etc.
+        
+        // Exemplo de tracking de conversão
+        if (typeof gtag !== 'undefined') {
+            gtag('event', 'conversion', {
+                'send_to': 'AW-CONVERSION_ID/CONVERSION_LABEL',
+                'value': 1.0,
+                'currency': 'BRL'
+            });
+        }
+
+        // Exemplo de Facebook Pixel
+        if (typeof fbq !== 'undefined') {
+            fbq('track', 'Lead');
+        }
+    </script>
+</body>
+</html>
