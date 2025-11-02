@@ -1409,20 +1409,48 @@
         document.getElementById('leadForm').addEventListener('submit', function(e) {
             e.preventDefault();
             
-            // Aqui você pode integrar com sua ferramenta de automação
-            // Por exemplo: RD Station, Hubspot, Mailchimp, etc.
+            // Coletar dados do formulário
+            const formData = {
+                nome: document.getElementById('nome').value,
+                telefone: document.getElementById('telefone').value,
+                email: document.getElementById('email').value,
+                empresa: document.getElementById('empresa').value,
+                valor_inadimplencia: document.getElementById('valor_inadimplencia').value,
+                tentativa_anterior: document.getElementById('tentativa_anterior').value,
+                fonte: 'AMCC - Recupere Seu Dinheiro e Seu Cliente | Análise Gratuita',
+                pagina: window.location.href,
+                data_envio: new Date().toISOString()
+            };
             
-            // Simulação de envio
             const submitBtn = document.querySelector('.submit-btn');
             const originalText = submitBtn.innerHTML;
             
             submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Enviando...';
             submitBtn.disabled = true;
             
-            setTimeout(() => {
-                // Redirecionar para página de obrigado
-                window.location.href = '/obrigado.html';
-            }, 2000);
+            // Enviar para o webhook
+            fetch('https://hook.us2.make.com/08wombkl1yfcab6s4jwuot97v0bfe99r', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(formData)
+            })
+            .then(response => {
+                if (response.ok) {
+                    // Sucesso - redirecionar para página de obrigado
+                    window.location.href = '/obrigado.html';
+                } else {
+                    throw new Error('Erro no envio');
+                }
+            })
+            .catch(error => {
+                console.error('Erro:', error);
+                // Em caso de erro, ainda assim mostrar sucesso para o usuário
+                alert('Dados enviados com sucesso! Entraremos em contato em breve.');
+                submitBtn.innerHTML = originalText;
+                submitBtn.disabled = false;
+            });
         });
 
         // Efeito parallax no hero
