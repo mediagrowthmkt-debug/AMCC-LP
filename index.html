@@ -1423,15 +1423,13 @@
             
             // Coletar dados do formulário
             const formData = {
-                nome: document.getElementById('nome').value,
-                telefone: document.getElementById('telefone').value,
+                name: document.getElementById('nome').value,
                 email: document.getElementById('email').value,
-                empresa: document.getElementById('empresa').value,
-                valor_inadimplencia: document.getElementById('valor_inadimplencia').value,
-                tentativa_anterior: document.getElementById('tentativa_anterior').value,
-                fonte: 'AMCC - Recupere Seu Dinheiro e Seu Cliente | Análise Gratuita',
-                pagina: window.location.href,
-                data_envio: new Date().toISOString()
+                phone: document.getElementById('telefone').value,
+                plataforma: 'Orgânico - Site Principal',
+                question: `Empresa: ${document.getElementById('empresa').value} | Valor Inadimplência: ${document.getElementById('valor_inadimplencia').options[document.getElementById('valor_inadimplencia').selectedIndex].text} | Tentativa Anterior: ${document.getElementById('tentativa_anterior').value}`,
+                source: 'AMCC - Recupere Seu Dinheiro e Seu Cliente | Análise Gratuita',
+                tags: ['AMCC', 'Recuperação de Crédito', 'Site Principal']
             };
             
             const submitBtn = document.querySelector('.submit-btn');
