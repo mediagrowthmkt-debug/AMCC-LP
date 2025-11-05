@@ -13,6 +13,25 @@
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     
+    <!-- Meta Pixel Code -->
+    <script>
+    !function(f,b,e,v,n,t,s)
+    {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+    n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+    if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+    n.queue=[];t=b.createElement(e);t.async=!0;
+    t.src=v;s=b.getElementsByTagName(e)[0];
+    s.parentNode.insertBefore(t,s)}(window, document,'script',
+    'https://connect.facebook.net/en_US/fbevents.js');
+    fbq('init', '1975375346337357');
+    fbq('track', 'PageView');
+    fbq('track', 'Lead');
+    </script>
+    <noscript><img height="1" width="1" style="display:none"
+    src="https://www.facebook.com/tr?id=1975375346337357&ev=PageView&noscript=1"
+    /></noscript>
+    <!-- End Meta Pixel Code -->
+    
     <style>
         :root {
             --primary-color: #8B0F0F;
@@ -394,20 +413,15 @@
         }, 5000);
 
         // Analytics/Tracking (opcional)
-        // Aqui você pode adicionar código de tracking como Google Analytics, Facebook Pixel, etc.
+        // Aqui você pode adicionar código de tracking como Google Analytics, etc.
         
-        // Exemplo de tracking de conversão
+        // Exemplo de tracking de conversão do Google Ads
         if (typeof gtag !== 'undefined') {
             gtag('event', 'conversion', {
                 'send_to': 'AW-CONVERSION_ID/CONVERSION_LABEL',
                 'value': 1.0,
                 'currency': 'BRL'
             });
-        }
-
-        // Exemplo de Facebook Pixel
-        if (typeof fbq !== 'undefined') {
-            fbq('track', 'Lead');
         }
     </script>
 </body>
