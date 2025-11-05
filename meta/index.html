@@ -1439,17 +1439,22 @@
         document.getElementById('leadForm').addEventListener('submit', function(e) {
             e.preventDefault();
             
+            // Obter parâmetros UTM da URL
+            const urlParams = new URLSearchParams(window.location.search);
+            const utmSource = urlParams.get('utm_source') || 'meta';
+            const utmCampaign = urlParams.get('utm_campaign') || 'meta-ads';
+            const utmMedium = urlParams.get('utm_medium') || 'cpc';
+            const fbclid = urlParams.get('fbclid') || '';
+            
             // Coletar dados do formulário
             const formData = {
-                nome: document.getElementById('nome').value,
-                telefone: document.getElementById('telefone').value,
+                name: document.getElementById('nome').value,
                 email: document.getElementById('email').value,
-                empresa: document.getElementById('empresa').value,
-                valor_inadimplencia: document.getElementById('valor_inadimplencia').value,
-                tentativa_anterior: document.getElementById('tentativa_anterior').value,
-                fonte: 'AMCC - Meta Ads - Recupere Seu Dinheiro e Seu Cliente',
-                pagina: window.location.href,
-                data_envio: new Date().toISOString()
+                phone: document.getElementById('telefone').value,
+                plataforma: `Meta Ads - ${utmCampaign}`,
+                question: `Empresa: ${document.getElementById('empresa').value} | Valor Inadimplência: ${document.getElementById('valor_inadimplencia').options[document.getElementById('valor_inadimplencia').selectedIndex].text} | Tentativa Anterior: ${document.getElementById('tentativa_anterior').value}`,
+                source: `AMCC - Meta Ads - ${utmCampaign} | ${window.location.href}`,
+                tags: ['AMCC', 'Recuperação de Crédito', 'Meta Ads', utmCampaign]
             };
             
             const submitBtn = document.querySelector('.submit-btn');
@@ -1457,6 +1462,16 @@
             
             submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Enviando...';
             submitBtn.disabled = true;
+            
+            // Disparar evento de Lead no Meta Pixel
+            if (typeof fbq !== 'undefined') {
+                fbq('track', 'Lead', {
+                    content_name: 'Análise Gratuita AMCC',
+                    content_category: 'Recuperação de Crédito',
+                    value: 0,
+                    currency: 'BRL'
+                });
+            }
             
             // Enviar para o webhook
             fetch('https://hook.us2.make.com/08wombkl1yfcab6s4jwuot97v0bfe99r', {
